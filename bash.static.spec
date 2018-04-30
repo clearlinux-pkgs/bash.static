@@ -6,7 +6,7 @@
 #
 Name     : bash.static
 Version  : 4.4.18
-Release  : 44
+Release  : 45
 URL      : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
 Source99 : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz.sig
@@ -52,14 +52,6 @@ Group: Documentation
 doc components for the bash.static package.
 
 
-%package extras
-Summary: extras components for the bash.static package.
-Group: Default
-
-%description extras
-extras components for the bash.static package.
-
-
 %prep
 %setup -q -n bash-4.4.18
 %patch1 -p1
@@ -71,7 +63,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1525104979
+export SOURCE_DATE_EPOCH=1525105699
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -90,12 +82,9 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check
 
 %install
-export SOURCE_DATE_EPOCH=1525104979
+export SOURCE_DATE_EPOCH=1525105699
 rm -rf %{buildroot}
 %make_install
-## make_install_append content
-ln -s bash %{buildroot}/usr/bin/sh
-## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -104,23 +93,19 @@ ln -s bash %{buildroot}/usr/bin/sh
 %defattr(-,root,root,-)
 %exclude /usr/bin/bashbug
 /usr/bin/bash
-/usr/bin/sh
 
 %files doc
 %defattr(-,root,root,-)
-%doc /usr/share/info/*
-%doc /usr/share/man/man1/*
-/usr/share/doc/bash/CHANGES
-/usr/share/doc/bash/COMPAT
-/usr/share/doc/bash/FAQ
-/usr/share/doc/bash/INTRO
-/usr/share/doc/bash/NEWS
-/usr/share/doc/bash/POSIX
-/usr/share/doc/bash/RBASH
-/usr/share/doc/bash/README
-/usr/share/doc/bash/bash.html
-/usr/share/doc/bash/bashref.html
-
-%files extras
-%defattr(-,root,root,-)
-/usr/bin/bashbug
+%exclude /usr/share/doc/bash/CHANGES
+%exclude /usr/share/doc/bash/COMPAT
+%exclude /usr/share/doc/bash/FAQ
+%exclude /usr/share/doc/bash/INTRO
+%exclude /usr/share/doc/bash/NEWS
+%exclude /usr/share/doc/bash/POSIX
+%exclude /usr/share/doc/bash/RBASH
+%exclude /usr/share/doc/bash/README
+%exclude /usr/share/doc/bash/bash.html
+%exclude /usr/share/doc/bash/bashref.html
+%exclude /usr/share/info/bash.info
+%exclude /usr/share/man/man1/bash.1
+%exclude /usr/share/man/man1/bashbug.1

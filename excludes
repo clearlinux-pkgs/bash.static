@@ -1,4 +1,14 @@
-#
-# This file contains the output files that need %exclude.
-# Full path names, one per line.
-#
+/usr/share/doc/bash/CHANGES
+/usr/share/doc/bash/COMPAT
+/usr/share/doc/bash/FAQ
+/usr/share/doc/bash/INTRO
+/usr/share/doc/bash/NEWS
+/usr/share/doc/bash/POSIX
+/usr/share/doc/bash/RBASH
+/usr/share/doc/bash/README
+/usr/share/doc/bash/bash.html
+/usr/share/doc/bash/bashref.html
+/usr/share/info/bash.info
+/usr/share/man/man1/bash.1
+/usr/share/man/man1/bashbug.1
+/usr/bin/bashbug
