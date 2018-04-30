@@ -1,0 +1,4 @@
+nodlopen.patch
+stateless.patch
+0001-Support-stateless-inputrc-configuration.patch
+cve-2017-5932.nopatch
