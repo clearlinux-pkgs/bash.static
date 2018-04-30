@@ -5,9 +5,6 @@ Configure miss: whether to use NLS
 Configure miss: varargs.h usability
 Configure miss: varargs.h presence
 Configure miss: varargs.h
-Configure miss: termcap.h usability
-Configure miss: termcap.h presence
-Configure miss: termcap.h
 Configure miss: sys/pte.h usability
 Configure miss: sys/pte.h presence
 Configure miss: sys/pte.h
@@ -46,3 +43,8 @@ Configure miss: TIOCSTAT in sys/ioctl.h
 Configure miss: whether WCONTINUED flag to waitpid is unavailable or available but broken
 Configure miss: speed_t in sys/types.h
 Configure miss: unusable real-time signals due to large values
+Configure miss: tgetent
+Configure miss: tgetent in -ltermcap
+Configure miss: tgetent in -ltinfo
+Configure miss: tgetent in -lcurses
+Configure miss: tgetent in -lncurses

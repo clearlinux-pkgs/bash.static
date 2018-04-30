@@ -1,3 +1,4 @@
---enable-cond-command --enable-history --enable-job-control --disable-readline --enable-extended-glob --disable-progcomp --enable-arith-for-command --enable-directory-stack --with-bash-malloc=yes --enable-static-link --disable-nls
+--with-bash-malloc=no --enable-static-link --disable-nls --without-rpath
+
 
 

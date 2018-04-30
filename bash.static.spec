@@ -6,7 +6,7 @@
 #
 Name     : bash.static
 Version  : 4.4.18
-Release  : 45
+Release  : 46
 URL      : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
 Source99 : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz.sig
@@ -18,6 +18,7 @@ Requires: bash.static-doc
 BuildRequires : bison
 BuildRequires : flex
 BuildRequires : glibc-staticdev
+BuildRequires : ncurses-dev
 Patch1: nodlopen.patch
 Patch2: stateless.patch
 Patch3: 0001-Support-stateless-inputrc-configuration.patch
@@ -63,7 +64,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1525105699
+export SOURCE_DATE_EPOCH=1525106564
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -71,7 +72,7 @@ export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sect
 export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs "
 export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs "
 export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs "
-%configure --disable-static --enable-cond-command --enable-history --enable-job-control --disable-readline --enable-extended-glob --disable-progcomp --enable-arith-for-command --enable-directory-stack --with-bash-malloc=yes --enable-static-link --disable-nls
+%configure --disable-static --with-bash-malloc=no --enable-static-link --disable-nls --without-rpath
 make  %{?_smp_mflags}
 
 %check
@@ -82,9 +83,12 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check
 
 %install
-export SOURCE_DATE_EPOCH=1525105699
+export SOURCE_DATE_EPOCH=1525106564
 rm -rf %{buildroot}
 %make_install
+## make_install_append content
+mv %{buildroot}/usr/bin/bash %{buildroot}/usr/bin/bash.static
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -92,7 +96,7 @@ rm -rf %{buildroot}
 %files bin
 %defattr(-,root,root,-)
 %exclude /usr/bin/bashbug
-/usr/bin/bash
+/usr/bin/bash.static
 
 %files doc
 %defattr(-,root,root,-)
