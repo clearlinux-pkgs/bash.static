@@ -6,7 +6,7 @@
 #
 Name     : bash.static
 Version  : 4.4.18
-Release  : 48
+Release  : 49
 URL      : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
 Source99 : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz.sig
