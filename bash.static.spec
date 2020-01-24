@@ -6,15 +6,15 @@
 #
 Name     : bash.static
 Version  : 4.4.18
-Release  : 50
-URL      : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
-Source0  : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
-Source99 : http://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz.sig
+Release  : 51
+URL      : https://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
+Source0  : https://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz
+Source1  : https://mirrors.kernel.org/gnu/bash/bash-4.4.18.tar.gz.sig
 Summary  : Bash headers for bash loadable builtins
 Group    : Development/Tools
 License  : GPL-3.0
-Requires: bash.static-bin
-Requires: bash.static-doc
+Requires: bash.static-bin = %{version}-%{release}
+Requires: bash.static-license = %{version}-%{release}
 BuildRequires : bison
 BuildRequires : flex
 BuildRequires : glibc-staticdev
@@ -40,21 +40,23 @@ of the shell's features.
 %package bin
 Summary: bin components for the bash.static package.
 Group: Binaries
+Requires: bash.static-license = %{version}-%{release}
 
 %description bin
 bin components for the bash.static package.
 
 
-%package doc
-Summary: doc components for the bash.static package.
-Group: Documentation
+%package license
+Summary: license components for the bash.static package.
+Group: Default
 
-%description doc
-doc components for the bash.static package.
+%description license
+license components for the bash.static package.
 
 
 %prep
 %setup -q -n bash-4.4.18
+cd %{_builddir}/bash-4.4.18
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -63,8 +65,9 @@ doc components for the bash.static package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1526007596
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1579889930
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -76,40 +79,47 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check
 
 %install
-export SOURCE_DATE_EPOCH=1526007596
+export SOURCE_DATE_EPOCH=1579889930
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/bash.static
+cp %{_builddir}/bash-4.4.18/COPYING %{buildroot}/usr/share/package-licenses/bash.static/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+cp %{_builddir}/bash-4.4.18/lib/readline/COPYING %{buildroot}/usr/share/package-licenses/bash.static/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+cp %{_builddir}/bash-4.4.18/tests/COPYRIGHT %{buildroot}/usr/share/package-licenses/bash.static/771f6b3c33dd1c00e5d2f319cb801d0611ddd699
 %make_install
-## make_install_append content
+## Remove excluded files
+rm -f %{buildroot}/usr/share/doc/bash/CHANGES
+rm -f %{buildroot}/usr/share/doc/bash/COMPAT
+rm -f %{buildroot}/usr/share/doc/bash/FAQ
+rm -f %{buildroot}/usr/share/doc/bash/INTRO
+rm -f %{buildroot}/usr/share/doc/bash/NEWS
+rm -f %{buildroot}/usr/share/doc/bash/POSIX
+rm -f %{buildroot}/usr/share/doc/bash/RBASH
+rm -f %{buildroot}/usr/share/doc/bash/README
+rm -f %{buildroot}/usr/share/doc/bash/bash.html
+rm -f %{buildroot}/usr/share/doc/bash/bashref.html
+rm -f %{buildroot}/usr/share/info/bash.info
+rm -f %{buildroot}/usr/share/man/man1/bash.1
+rm -f %{buildroot}/usr/share/man/man1/bashbug.1
+rm -f %{buildroot}/usr/bin/bashbug
+## install_append content
 mv %{buildroot}/usr/bin/bash %{buildroot}/usr/bin/bash.static
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
-%exclude /usr/bin/bashbug
 /usr/bin/bash.static
 
-%files doc
-%defattr(-,root,root,-)
-%exclude /usr/share/doc/bash/CHANGES
-%exclude /usr/share/doc/bash/COMPAT
-%exclude /usr/share/doc/bash/FAQ
-%exclude /usr/share/doc/bash/INTRO
-%exclude /usr/share/doc/bash/NEWS
-%exclude /usr/share/doc/bash/POSIX
-%exclude /usr/share/doc/bash/RBASH
-%exclude /usr/share/doc/bash/README
-%exclude /usr/share/doc/bash/bash.html
-%exclude /usr/share/doc/bash/bashref.html
-%exclude /usr/share/info/bash.info
-%exclude /usr/share/man/man1/bash.1
-%exclude /usr/share/man/man1/bashbug.1
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/bash.static/771f6b3c33dd1c00e5d2f319cb801d0611ddd699
+/usr/share/package-licenses/bash.static/8624bcdae55baeef00cd11d5dfcfa60f68710a02
